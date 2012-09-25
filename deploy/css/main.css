@@ -1,4 +1,4 @@
 body {background-color: #eee; font-family: Arial; font-size: 0.9em;}
 h1 {font-size:1.5em;}
 canvas {border:1px solid black;}
-#container {}
+#container {width:100%;text-align:center;}
