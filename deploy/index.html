@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Cool3D demo</title>
+    <link rel="stylesheet" href="css/main.css">
+    <script src="ccv.js"></script>
+    <script src="face.js"></script>
+    <script src="gl-matrix-min.js"></script>
+
+    <script src="index.js"></script>
+    
+    <script type="text/javascript">
+      var start = function() {
+        var main = new cool3d.Main(document.getElementById('container'));
+      }
+    </script>
+  </head>
+  <body onload="javascript:start()">
+    <h1>Interactive 3D via eye-tracking using JavaScript and WebGL</h1>
+    <p>This is a proof-of-concept that I put together in a few hours to examine the possibility of eyetracking-based 3D scene faking.<br />
+    <strong>You have to allow this webpage to access your webcamera, otherwise this application won't work.</strong><br />
+    This app uses <a href="http://github.com/liuliu/ccv">http://github.com/liuliu/ccv</a> for face detection and WebGL for scene rendering. Example scene based on <a href="http://learningwebgl.com/blog/?p=239">http://learningwebgl.com/blog/?p=239</a></p>
+    <div id="container">
+    </div>
+  </body>
+</html>

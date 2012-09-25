@@ -1,0 +1,13 @@
+{
+  "id": "debug",
+  "inherits": "main.json",
+
+  "define": {
+    "goog.DEBUG": true
+  },
+
+  "mode": "SIMPLE",
+
+  "pretty-print": true,
+  "debug": true
+}
