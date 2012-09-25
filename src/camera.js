@@ -6,6 +6,7 @@
 
 goog.provide('cool3d.Camera');
 
+goog.require('goog.dom');
 goog.require('goog.events');
 
 

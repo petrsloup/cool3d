@@ -8,7 +8,7 @@ goog.provide('cool3d.Main');
 
 goog.require('cool3d.Camera');
 goog.require('cool3d.Scene');
-goog.require('goog.debug');
+
 goog.require('goog.dom');
 
 
@@ -19,10 +19,10 @@ goog.require('goog.dom');
  */
 cool3d.Main = function(element) {
   this.camera_ = new cool3d.Camera(
-      goog.bind(this.start_, this)/*,
-    function(e) {
-      alert('Error ' + e);
-    }*/);
+      goog.bind(this.start_, this),
+      function(e) {
+        alert('This app won\'t work without webcamera access!');
+      });
 
   this.backCanvas_ = goog.dom.createElement('canvas');
   this.backContext_ = this.backCanvas_.getContext('2d');
