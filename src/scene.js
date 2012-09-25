@@ -232,8 +232,8 @@ cool3d.Scene.prototype.setMatrixUniforms = function() {
  * @param {number} y .
  */
 cool3d.Scene.prototype.setEyePos = function(x, y) {
-  this.eyeX_ = -x * 5;
-  this.eyeY_ = -y * 5;
+  this.eyeX_ = -x * 8;
+  this.eyeY_ = -y * 8;
 };
 
 
