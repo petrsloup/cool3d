@@ -101,7 +101,7 @@ cool3d.Main.prototype.render_ = function() {
     var c = this.lastComp_[0];
     //window['console']['log'](goog.debug.deepExpose(c));
     var x = c['x'], y = c['y'], w = c['width'], h = c['height'];
-    this.scene_.setEyePos((x + w / 2) / this.canvas2d_.width - 0.5,
+    this.scene_.setEyePos((x + w / 2) / this.backCanvas_.width - 0.5,
                           (y + h / 2) / this.backCanvas_.height - 0.5);
     this.context2d_.strokeRect(x, y, w, h);
   }
