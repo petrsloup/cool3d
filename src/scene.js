@@ -208,8 +208,8 @@ cool3d.Scene = function(context) {
   this.cubeVertexIndexBuffer_.itemSize = 1;
   this.cubeVertexIndexBuffer_.numItems = 36;
 
-  this.eyeX_ = 0;
-  this.eyeY_ = 0;
+  this.eyeAngleX_ = 0;
+  this.eyeAngleY_ = 0;
 
   this.mvMatrix = mat4['create']();
 
@@ -228,12 +228,26 @@ cool3d.Scene.prototype.setMatrixUniforms = function() {
 
 
 /**
- * @param {number} x .
- * @param {number} y .
+ * @param {number} x [-0.5; 0.5].
+ * @param {number} y [-0.5; 0.5].
+ * @param {number} distance Distance of the user from webcamera in scene units.
+ * @param {number} fovy Vertical field-of-view of the webcam (in degrees).
+ * @param {number} aspect Aspect ratio of the webcamera pictures.
  */
-cool3d.Scene.prototype.setEyePos = function(x, y) {
-  this.eyeX_ = -x * 8;
-  this.eyeY_ = -y * 8;
+cool3d.Scene.prototype.setEye = function(x, y, distance, fovy, aspect) {
+  fovy = fovy / 180 * Math.PI;
+
+  //tune sensitivity
+  x *= 1.5;
+  y *= 2;
+
+  var ysize = Math.tan(fovy / 2) * distance;
+  var xsize = aspect * ysize;
+  var angleY = Math.atan((y * ysize) / distance);
+  var angleX = Math.atan((x * xsize) / distance);
+
+  this.eyeAngleX_ = angleX;
+  this.eyeAngleY_ = angleY;
 };
 
 
@@ -247,8 +261,22 @@ cool3d.Scene.prototype.draw = function() {
   mat4['perspective'](45, gl.canvas.width / gl.canvas.height,
                       0.1, 100.0, this.pMatrix);
 
-  this.mvMatrix = mat4['lookAt']([this.eyeX_ + 1.5, this.eyeY_ + 0.5, 7.5],
-                                 [1.5, 0.5, 0], [0, 1, 0]);
+  //mat4['ortho'](-4, 4, -3, 3, 0.1, 100.0, this.pMatrix);
+
+  //this.mvMatrix = mat4['lookAt']([0 + 1.5, 0 + 0.5, 7.5],
+  //                               [1.5, 0.5, 0], [0, 1, 0]);
+  mat4['identity'](this.mvMatrix);
+
+  mat4['translate'](this.pMatrix, [-1.5, -1, -6.5]);
+  mat4['multiply'](this.pMatrix,
+      [1, 0, 0, 0,
+       0, 1, 0, 0,
+       Math.tan(this.eyeAngleX_), Math.tan(this.eyeAngleY_), 1, 0,
+       0, 0, 0, 1], this.pMatrix);
+  mat4['translate'](this.pMatrix, [0, 0, -1]);
+
+  //mat4['rotateY'](this.mvMatrix, this.eyeAngleX_);
+  //mat4['rotateX'](this.mvMatrix, -this.eyeAngleY_);
 
   gl.bindBuffer(gl.ARRAY_BUFFER, this.pyramidVertexPositionBuffer_);
   gl.vertexAttribPointer(this.shaderProgram.vertexPositionAttribute,

@@ -94,6 +94,12 @@ cool3d.Main.prototype.render_ = function() {
 
   this.lastComp_ = (comp && comp.length) ? comp : this.lastComp_;
 
+  // webcam "simulator" :)
+  //this.lastComp_ =
+  //    [{'width': 50, 'height': 50,
+  //     'x':this.backCanvas_.width*(Math.sin(goog.now()/2000)/2 + 0.5)-50/2,
+  //     'y':this.backCanvas_.height*(Math.sin(goog.now()/4000)/2 + 0.5)-50/2}];
+
   this.context2d_.strokeStyle = 'yellow';
 
   if (this.lastComp_ && this.lastComp_.length) {
@@ -101,8 +107,9 @@ cool3d.Main.prototype.render_ = function() {
     var c = this.lastComp_[0];
     //window['console']['log'](goog.debug.deepExpose(c));
     var x = c['x'], y = c['y'], w = c['width'], h = c['height'];
-    this.scene_.setEyePos((x + w / 2) / this.backCanvas_.width - 0.5,
-                          (y + h / 2) / this.backCanvas_.height - 0.5);
+    this.scene_.setEye((x + w / 2) / this.backCanvas_.width - 0.5,
+                       (y + h / 2) / this.backCanvas_.height - 0.5,
+                       20, 41, this.canvas2d_.width / this.canvas2d_.height);
     this.context2d_.strokeRect(x, y, w, h);
   }
   this.scene_.draw();
